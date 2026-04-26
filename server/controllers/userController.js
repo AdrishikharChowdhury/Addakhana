@@ -50,7 +50,7 @@ export const signUp = async (req, res) => {
     }
   } catch (error) {
     log(`Sign Up Error ${error}`);
-    res.json({ success: false, message: error.message });
+    res.json({ success: false, message: error?.message || error?.error?.message });
   }
 };
 
