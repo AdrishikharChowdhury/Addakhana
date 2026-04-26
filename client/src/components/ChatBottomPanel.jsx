@@ -30,19 +30,19 @@ const ChatBottomPanel = () => {
   };
 
   return (
-    <div className="text-white w-full flex justify-between items-center p-6 bg-zinc-950">
+    <div className="text-white w-full flex justify-between items-center p-2 md:p-4 bg-zinc-950 gap-1 md:gap-2">
       <input
         type="text"
         placeholder="Enter your message..."
-        className="border-2 p-4 w-9/10 border-zinc-800 rounded-2xl"
+        className="border-2 p-2 md:p-4 flex-1 border-zinc-800 rounded-xl md:rounded-2xl text-base md:text-lg"
         onChange={(e) => setinput(e.target.value)}
         value={input}
         onKeyDown={(e) => (e.key === "Enter" ? handleSendMessage(e) : null)}
       />
 
-      <button className="p-4 rounded-full hover:bg-zinc-800 cursor-pointer">
+      <button className="p-2 md:p-4 rounded-full hover:bg-zinc-800 cursor-pointer">
         <label className="cursor-pointer" htmlFor="image">
-          <Paperclip />
+          <Paperclip size={20} className="md:size-6" />
         </label>
         <input
           type="file"
@@ -55,9 +55,9 @@ const ChatBottomPanel = () => {
       </button>
       <button
         onClick={handleSendMessage}
-        className="p-4 rounded-full bg-zinc-700 border-2 border-zinc-800 cursor-pointer"
+        className="p-2 md:p-4 rounded-full bg-zinc-700 border-2 border-zinc-800 cursor-pointer"
       >
-        <SendHorizontal />
+        <SendHorizontal size={20} className="md:size-6" />
       </button>
     </div>
   );

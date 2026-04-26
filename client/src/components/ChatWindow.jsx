@@ -32,21 +32,21 @@ const ChatWindow = ({ isInfo }) => {
     <>
       <ChatTopPanel isInfo={isInfo} />
       <ChatBackground>
-        <div className="max-h-206 overflow-scroll flex flex-col gap-2 p-4">
+        <div className="max-h-[calc(100vh-220px)] md:max-h-[33rem] lg:max-h-[36rem] overflow-y-auto flex flex-col gap-2 p-2 md:p-4">
           {messages.map((msg, idx) =>
             msg.senderId === authUser._id ? (
               msg.image ? (
-                <RightChatImage image={msg.image} createdAt={msg.createdAt} />
+                <RightChatImage key={idx} image={msg.image} createdAt={msg.createdAt} />
               ) : (
-                <RightChatMessage text={msg.text} createdAt={msg.createdAt} />
+                <RightChatMessage key={idx} text={msg.text} createdAt={msg.createdAt} />
               )
             ) : msg.image ? (
-              <LeftChatImage image={msg.image} createdAt={msg.createdAt} />
+              <LeftChatImage key={idx} image={msg.image} createdAt={msg.createdAt} />
             ) : (
-              <LeftChatMessage text={msg.text} createdAt={msg.createdAt} />
+              <LeftChatMessage key={idx} text={msg.text} createdAt={msg.createdAt} />
             ),
           )}
-          <div className="" ref={scrollEnd}></div>
+          <div ref={scrollEnd}></div>
         </div>
       </ChatBackground>
       <ChatBottomPanel />
