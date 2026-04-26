@@ -49,8 +49,8 @@ const Chat = () => {
         )}
       </div>
       
-      {/* RightSidebar - overlay on mobile */}
-      <div className={`${info ? 'block' : 'hidden'} md:block`}>
+      {/* RightSidebar - hidden by default, shown when info is clicked */}
+      <div className={`${info ? 'flex' : 'hidden'} md:flex`}>
         <RightSidebar info={info} />
       </div>
     </div>

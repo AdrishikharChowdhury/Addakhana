@@ -17,7 +17,7 @@ const RightSidebar = ({ info }) => {
 
   return (
     <div
-      className={`${!info ? "hidden md:flex" : "flex"} w-full md:w-80 h-full bg-zinc-900 text-white flex-col border-l-2 border-purple-900 shrink-0 fixed md:relative right-0 top-0 z-40`}
+      className={`${info ? 'flex' : 'hidden'} w-full md:w-80 h-full bg-zinc-900 text-white flex-col border-l-2 border-purple-900 shrink-0 fixed md:relative right-0 top-0 z-40`}
     >
       <p className="w-full text-xl md:text-3xl text-center py-4 md:py-8 bg-zinc-800 font-bold">
         Account Overview

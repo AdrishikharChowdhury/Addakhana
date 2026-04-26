@@ -17,14 +17,20 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth=async () => {
     try {
+      const savedToken = localStorage.getItem("token")
+      if (savedToken) {
+        axios.defaults.headers.common["Authorization"] = `Bearer ${savedToken}`
+      }
       const {data}=await axios.get("/api/auth/check")
       if(data.success){
         setauthUser(data.user)
         connectSocket(data.user)
       }
     } catch (error) {
-      toast.error(error.message)
-      log(error.message)
+      const msg = error.response?.data?.message || error.message || "Auth check failed"
+      localStorage.removeItem("token")
+      setauthUser(null)
+      log(msg)
     }
   }
 
@@ -34,16 +40,16 @@ export const AuthProvider = ({ children }) => {
       if(data.success){
         setauthUser(data.userData)
         connectSocket(data.userData)
-        axios.defaults.headers.common["token"]=data.token
+        axios.defaults.headers.common["Authorization"]=`Bearer ${data.token}`
         settoken(data.token)
         localStorage.setItem("token",data.token)
         toast.success(data.message)
       }
       else{
-        toast.error(error.message)
+        toast.error(data.message || "Login failed")
       }
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.response?.data?.message || "Login failed")
       log(error.message)
     }
   }
@@ -54,9 +60,9 @@ export const AuthProvider = ({ children }) => {
       settoken(null)
       setauthUser(null)
       setonlineUsers([])
-      axios.defaults.headers.common["token"]=null
+      axios.defaults.headers.common["Authorization"]=null
       toast.success("Successfully Logged Out")
-      socket.disconnect()
+      socket?.disconnect()
     } catch (error) {
       log(error.message)
     }
@@ -91,8 +97,9 @@ export const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    if(token){
-      axios.defaults.headers.common["token"]=token
+    const savedToken = localStorage.getItem("token")
+    if(savedToken){
+      axios.defaults.headers.common["Authorization"]=`Bearer ${savedToken}`
     }
     checkAuth()
   }, [])
