@@ -16,7 +16,11 @@ const app = express();
 const server = http.createServer(app);
 
 export const io = new Server(server, {
-  cors: { origin: "https://addakhana-pied.vercel.app/" },
+  cors: { 
+    origin: "*",
+    methods: ["GET", "POST"],
+    credentials: true
+  },
 });
 
 export const userSocketMap = {};
@@ -35,7 +39,37 @@ io.on("connection", (socket) => {
 });
 
 app.use(express.json({ limit: "4mb" }));
-app.use(cors({ origin: "https://addakhana-pied.vercel.app/", credentials: true }));
+
+const corsOptions = {
+  origin: function(origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+    
+    // Allow specific domains (without trailing slash)
+    const allowedOrigins = [
+      "https://addakhana-pied.vercel.app",
+      "https://addakhana-frontend.vercel.app",
+      "http://localhost:5173",
+      "http://localhost:3000"
+    ];
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      // For Vercel preview deployments or other origins, check if it contains vercel.app
+      if (origin && origin.includes('vercel.app')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+};
+
+app.use(cors(corsOptions));
 app.use(cookieParser());
 app.use(express.static(path.join(import.meta.dirname, "../client/public")));
 
