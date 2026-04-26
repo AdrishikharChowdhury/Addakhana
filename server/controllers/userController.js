@@ -5,7 +5,7 @@ import cloudinary from "../lib/cloudinary.js";
 import path from "path";
 import bcrypt from "bcrypt";
 const log = dbgr("development:userController");
-const imagePath = "/default-avatar.webp",
+const imagePath = path.join(import.meta.dirname, "../public/default-avatar.webp");
 
 export const signUp = async (req, res) => {
   try {

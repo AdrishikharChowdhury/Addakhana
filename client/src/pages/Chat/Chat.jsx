@@ -1,7 +1,5 @@
 import React, { useState,useContext } from "react";
 import LeftSideBar from "../../components/LeftSideBar";
-import defaultPic from "../../assets/default-avatar.webp";
-import { Info, Paperclip, SendHorizontal, Menu, X } from "lucide-react";
 import ChatWindow from "../../components/ChatWindow";
 import RightSidebar from "../../components/RightSidebar";
 import ChatContainer from "../../components/ChatContainer";
@@ -11,7 +9,6 @@ const Chat = () => {
   const {selectedUser,setselectedUser}=useContext(ChatContext)
   const [isCollapsed, setisCollapsed] = useState(false);
   const [info, setinfo] = useState(false);
-  const [showSidebar, setShowSidebar] = useState(true);
 
   const isInfo = () => {
     setinfo(!info);
@@ -21,16 +18,8 @@ const Chat = () => {
 
   return (
     <div className="w-full h-screen flex">
-      {/* Mobile menu button */}
-      <button 
-        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-zinc-800 rounded-lg"
-        onClick={() => setShowSidebar(!showSidebar)}
-      >
-        {showSidebar ? <X size={24} /> : <Menu size={24} />}
-      </button>
-
-      {/* LeftSidebar - hidden on mobile when collapsed */}
-      <div className={`${showSidebar ? 'block' : 'hidden'} md:block`}>
+      {/* LeftSidebar */}
+      <div className="block">
         <LeftSideBar
           isCollapsed={isCollapsed}
           navBox={navBox}
@@ -49,8 +38,8 @@ const Chat = () => {
         )}
       </div>
       
-      {/* RightSidebar - hidden by default, shown when info is clicked */}
-      <div className={`${info ? 'flex' : 'hidden'} md:flex`}>
+      {/* RightSidebar */}
+      <div className={`${info ? 'flex' : 'hidden'}`}>
         <RightSidebar info={info} />
       </div>
     </div>
