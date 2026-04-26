@@ -16,7 +16,7 @@ const app = express();
 const server = http.createServer(app);
 
 export const io = new Server(server, {
-  cors: { origin: "http://localhost:5173" },
+  cors: { origin: "https://addakhana-pied.vercel.app/" },
 });
 
 export const userSocketMap = {};
