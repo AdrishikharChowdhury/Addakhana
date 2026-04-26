@@ -83,7 +83,11 @@ export const login = async (req, res) => {
       message: "Account Logged In",
     });
   } catch (error) {
-    log(`Login Error ${error}`);
+    log(`Login Error ${error?.message || error}`);
+    res.json({
+      success: false,
+      message: error?.message || "Login failed",
+    });
   }
 };
 

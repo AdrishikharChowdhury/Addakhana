@@ -9,7 +9,6 @@ const log=dbgr("development:AuthContext")
 const backendUrl = import.meta.env.VITE_BACKEND_URL
 
 axios.defaults.baseURL = backendUrl
-axios.defaults.withCredentials = true
 
 export const AuthContext = createContext();
 
@@ -20,17 +19,21 @@ export const AuthProvider = ({ children }) => {
       const savedToken = localStorage.getItem("token")
       if (savedToken) {
         axios.defaults.headers.common["Authorization"] = `Bearer ${savedToken}`
+        console.log("checkAuth: Token found, setting header")
       }
       const {data}=await axios.get("/api/auth/check")
+      console.log("checkAuth response:", data)
       if(data.success){
+        console.log("checkAuth: Setting user", data.user)
         setauthUser(data.user)
         connectSocket(data.user)
       }
     } catch (error) {
       const msg = error.response?.data?.message || error.message || "Auth check failed"
+      console.log("checkAuth error:", error)
       localStorage.removeItem("token")
       setauthUser(null)
-      log(msg)
+      log(`Auth check failed: ${msg}`)
     }
   }
 
@@ -47,10 +50,12 @@ export const AuthProvider = ({ children }) => {
       }
       else{
         toast.error(data.message || "Login failed")
+        log(`Login failed: ${data.message}`)
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed")
-      log(error.message)
+      const msg = error.response?.data?.message || error.message || "Login failed"
+      toast.error(msg)
+      log(`Login error: ${msg}`, error)
     }
   }
 
