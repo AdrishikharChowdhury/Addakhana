@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 const log = dbgr("development:userController");
 const imagePath = path.join(
   import.meta.dirname,
-  "../../client/public/default-avatar.webp",
+  "./public/default-avatar.webp",
 );
 
 export const signUp = async (req, res) => {
