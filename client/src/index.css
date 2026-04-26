@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+body{
+    font-family: 'Poppins';
+}
+
+input{
+    outline: none;
+}
