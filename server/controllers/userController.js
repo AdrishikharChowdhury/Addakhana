@@ -47,10 +47,12 @@ export const signUp = async (req, res) => {
     } catch (error) {
       log(`Sign Up in Error ${error?.message || error?.error?.message || JSON.stringify(error)}`)
       res.json({ success: false, message: error.message });
+      console.log(error)
     }
   } catch (error) {
     log(`Sign Up Error ${error}`);
     res.json({ success: false, message: error?.message || error?.error?.message });
+    console.log(error)
   }
 };
 
