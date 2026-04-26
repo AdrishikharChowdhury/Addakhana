@@ -16,7 +16,7 @@ const app = express();
 const server = http.createServer(app);
 
 export const io = new Server(server, {
-  cors: { origin: "http://localhost:5173" }
+  cors: { origin: "http://localhost:5173" },
 });
 
 export const userSocketMap = {};
@@ -48,8 +48,12 @@ app.use("/api/messages", messageRouter);
 
 await connectDB();
 
-const PORT = process.env.PORT || 5000;
+if (process.env.NODE_ENV !== "production") {
+  const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, () => {
-  log(`Server is running on PORT: ${PORT}`);
-});
+  server.listen(PORT, () => {
+    log(`Server is running on PORT: ${PORT}`);
+  });
+}
+
+export default server
