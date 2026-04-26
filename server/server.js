@@ -71,7 +71,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(cookieParser());
-app.use(express.static(path.join(import.meta.dirname, "../client/public")));
+app.use(express.static(path.join(import.meta.dirname, "public")));
 
 app.use("/api/status", (req, res) => {
   res.send("Server is Live");
