@@ -32,7 +32,7 @@ const ChatWindow = ({ isInfo }) => {
     <>
       <ChatTopPanel isInfo={isInfo} />
       <ChatBackground>
-        <div className="max-h-[34rem] overflow-y-auto flex flex-col gap-2 p-4">
+        <div className="max-h-208 overflow-y-auto flex flex-col gap-2 p-4">
           {messages.map((msg, idx) =>
             msg.senderId === authUser._id ? (
               msg.image ? (
